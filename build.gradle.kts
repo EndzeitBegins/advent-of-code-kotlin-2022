@@ -17,3 +17,6 @@ tasks {
         gradleVersion = "7.6"
     }
 }
+dependencies {
+    implementation(kotlin("reflect"))
+}
