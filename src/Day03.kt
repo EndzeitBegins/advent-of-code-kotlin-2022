@@ -25,6 +25,9 @@ private val Item.priority: Int
         else -> error("Character '$this' is not supported!")
     }
 
+private fun Sequence<Rucksack>.groupElves(): Sequence<ElfGroup> =
+    windowed(3, 3, partialWindows = false)
+
 private fun part1(input: List<String>): Int = input
     .asRucksacks()
     .flatMap { rucksack -> rucksack.findItemsInBothCompartments() }
@@ -37,9 +40,6 @@ private fun part2(input: List<String>): Int = input
     .flatMap { elfGroup -> elfGroup.findCommonItems() }
     .map { item -> item.priority }
     .sum()
-
-private fun Sequence<Rucksack>.groupElves(): Sequence<ElfGroup> =
-    windowed(3, 3, partialWindows = false)
 
 fun main() {
     // test if implementation meets criteria from the description, like:

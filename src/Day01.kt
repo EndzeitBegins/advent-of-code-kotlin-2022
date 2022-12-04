@@ -1,3 +1,17 @@
+private fun List<String>.toSnackSumSequence(): Sequence<Int> = sequence {
+    var sum = 0
+
+    for (item in this@toSnackSumSequence) {
+        if (item.isBlank()) {
+            this.yield(sum)
+            sum = 0
+        } else {
+            sum += item.toInt()
+        }
+    }
+    this.yield(sum)
+}
+
 private fun part1(input: List<String>): Int =
     input
         .toSnackSumSequence()
@@ -20,18 +34,4 @@ fun main() {
     val input = readInput("Day01")
     println(part1(input))
     println(part2(input))
-}
-
-private fun List<String>.toSnackSumSequence(): Sequence<Int> = sequence {
-    var sum = 0
-
-    for (item in this@toSnackSumSequence) {
-        if (item.isBlank()) {
-            this.yield(sum)
-            sum = 0
-        } else {
-            sum += item.toInt()
-        }
-    }
-    this.yield(sum)
 }
