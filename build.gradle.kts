@@ -1,5 +1,6 @@
 plugins {
     kotlin("jvm") version "1.7.22"
+    kotlin("plugin.serialization") version "1.7.20"
 }
 
 repositories {
@@ -19,4 +20,5 @@ tasks {
 }
 dependencies {
     implementation(kotlin("reflect"))
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.4.1")
 }
