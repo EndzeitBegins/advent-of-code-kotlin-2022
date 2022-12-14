@@ -1,3 +1,8 @@
+package day01
+
+import readInput
+import readTestInput
+
 private fun List<String>.toSnackSumSequence(): Sequence<Int> = sequence {
     var sum = 0
 
@@ -27,7 +32,7 @@ private fun part2(input: List<String>): Int =
 fun main() {
 
     // test if implementation meets criteria from the description, like:
-    val testInput = readInput("Day01_test")
+    val testInput = readTestInput("Day01")
     check(part1(testInput) == 24000)
     check(part2(testInput) == 45000)
 

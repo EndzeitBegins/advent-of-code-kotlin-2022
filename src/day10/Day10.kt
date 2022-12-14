@@ -1,3 +1,8 @@
+package day10
+
+import readInput
+import readTestInput
+
 private fun computeRegisterValues(input: List<String>) = sequence {
     var registerValue = 1
 
@@ -50,9 +55,10 @@ private fun part2(input: List<String>): String {
 
 fun main() {
     // test if implementation meets criteria from the description, like:
-    val testInput = readInput("Day10_test")
+    val testInput = readTestInput("Day10")
     check(part1(testInput) == 13140)
-    check(part2(testInput) == """
+    check(
+        part2(testInput) == """
         ##..##..##..##..##..##..##..##..##..##..
         ###...###...###...###...###...###...###.
         ####....####....####....####....####....

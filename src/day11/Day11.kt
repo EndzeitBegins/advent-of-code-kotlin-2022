@@ -1,3 +1,8 @@
+package day11
+
+import readInput
+import readTestInput
+
 private data class Monkey(
     val items: MutableList<Long>,
     val operation: (initialWorryLevel: Long) -> Long,
@@ -102,7 +107,7 @@ private fun part2(input: List<String>): Long {
 
 fun main() {
     // test if implementation meets criteria from the description, like:
-    val testInput = readInput("Day11_test")
+    val testInput = readTestInput("Day11")
     check(part1(testInput) == 10605L)
     check(part2(testInput) == 2713310158L)
 

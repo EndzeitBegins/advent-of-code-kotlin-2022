@@ -1,3 +1,8 @@
+package day06
+
+import readInput
+import readTestInput
+
 private fun String.findStartIndexOfMarker(markerLength: Int): Int = this
     .windowed(size = markerLength, step = 1)
     .indexOfFirst { sequence -> sequence.toSet().size == markerLength }
@@ -16,7 +21,7 @@ private fun part2(input: String): Int {
 
 fun main() {
     // test if implementation meets criteria from the description, like:
-    val testInput = readInput("Day06_test").single()
+    val testInput = readTestInput("Day06").single()
     check(part1(testInput) == 11)
     check(part2(testInput) == 26)
 

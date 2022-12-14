@@ -1,3 +1,7 @@
+package day07
+
+import readInput
+import readTestInput
 import java.nio.file.Path
 import kotlin.io.path.Path
 import kotlin.io.path.div
@@ -82,7 +86,7 @@ private fun part2(input: List<String>): Int {
 
 fun main() {
     // test if implementation meets criteria from the description, like:
-    val testInput = readInput("Day07_test")
+    val testInput = readTestInput("Day07")
     check(part1(testInput) == 95437)
     check(part2(testInput) == 24933642)
 

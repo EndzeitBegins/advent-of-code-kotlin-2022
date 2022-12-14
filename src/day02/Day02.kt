@@ -1,3 +1,8 @@
+package day02
+
+import readInput
+import readTestInput
+
 private fun String.toShape(): Shape = when (this) {
     "A", "X" -> Shape.Rock
     "B", "Y" -> Shape.Paper
@@ -90,7 +95,7 @@ private fun part2(input: List<String>): Int {
 
 fun main() {
     // test if implementation meets criteria from the description, like:
-    val testInput = readInput("Day02_test")
+    val testInput = readTestInput("Day02")
     check(part1(testInput) == 15)
     check(part2(testInput) == 12)
 

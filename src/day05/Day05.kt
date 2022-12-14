@@ -1,3 +1,8 @@
+package day05
+
+import readInput
+import readTestInput
+
 private fun List<String>.parse(): Pair<List<String>, List<String>> {
     val stackNumberLineIndex = this.indexOfFirst { line -> line.contains("""\d""".toRegex()) }
 
@@ -103,7 +108,7 @@ private fun part2(input: List<String>): String {
 
 fun main() {
     // test if implementation meets criteria from the description, like:
-    val testInput = readInput("Day05_test")
+    val testInput = readTestInput("Day05")
     check(part1(testInput) == "CMZ")
     check(part2(testInput) == "MCD")
 

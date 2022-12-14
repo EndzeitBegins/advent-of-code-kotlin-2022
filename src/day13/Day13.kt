@@ -1,10 +1,14 @@
-import Fragment.CollectionFragment
-import Fragment.DataFragment
+package day13
+
+import day13.Fragment.CollectionFragment
+import day13.Fragment.DataFragment
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonPrimitive
 import kotlinx.serialization.json.int
+import readInput
+import readTestInput
 
 private data class Packet (
     val fragments: CollectionFragment,
@@ -103,7 +107,7 @@ private fun part2(input: List<String>): Int {
 
 fun main() {
     // test if implementation meets criteria from the description, like:
-    val testInput = readInput("Day13_test")
+    val testInput = readTestInput("Day13")
     check(part1(testInput) == 13)
     check(part2(testInput) == 140)
 

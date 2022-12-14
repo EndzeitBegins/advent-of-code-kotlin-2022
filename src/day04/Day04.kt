@@ -1,3 +1,8 @@
+package day04
+
+import readInput
+import readTestInput
+
 private fun List<String>.asElfPairSequence(): Sequence<Pair<String, String>> = this
     .asSequence()
     .map { elfPair ->
@@ -41,7 +46,7 @@ private fun part2(input: List<String>): Int {
 
 fun main() {
     // test if implementation meets criteria from the description, like:
-    val testInput = readInput("Day04_test")
+    val testInput = readTestInput("Day04")
     check(part1(testInput) == 2)
     check(part2(testInput) == 4)
 

@@ -1,3 +1,8 @@
+package day08
+
+import readInput
+import readTestInput
+
 private data class Tree(
     val x: Int,
     val y: Int,
@@ -76,7 +81,7 @@ private fun part2(input: List<String>): Int {
 
 fun main() {
     // test if implementation meets criteria from the description, like:
-    val testInput = readInput("Day08_test")
+    val testInput = readTestInput("Day08")
     check(part1(testInput) == 21)
     check(part2(testInput) == 8)
 

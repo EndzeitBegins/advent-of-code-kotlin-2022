@@ -1,3 +1,8 @@
+package day12
+
+import readInput
+import readTestInput
+
 private data class Node(
     val elevation: Int,
     val rawElevation: Char,
@@ -107,7 +112,7 @@ private fun part2(input: List<String>): Int {
 
 fun main() {
     // test if implementation meets criteria from the description, like:
-    val testInput = readInput("Day12_test")
+    val testInput = readTestInput("Day12")
     check(part1(testInput) == 31)
     check(part2(testInput) == 29)
 

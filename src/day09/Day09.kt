@@ -1,3 +1,7 @@
+package day09
+
+import readInput
+import readTestInput
 import kotlin.math.absoluteValue
 
 private data class Position(val x: Int, val y: Int)
@@ -76,7 +80,7 @@ private fun part2(input: List<String>): Int {
 
 fun main() {
     // test if implementation meets criteria from the description, like:
-    val testInput = readInput("Day09_test")
+    val testInput = readTestInput("Day09")
     check(part1(testInput) == 13)
     check(part2(testInput) == 1)
 

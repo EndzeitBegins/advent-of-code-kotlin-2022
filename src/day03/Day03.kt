@@ -1,3 +1,8 @@
+package day03
+
+import readInput
+import readTestInput
+
 private data class Rucksack(val items: String) {
     val compartmentA: Compartment = items.take(items.length / 2)
     val compartmentB: Compartment = items.drop(items.length / 2)
@@ -43,7 +48,7 @@ private fun part2(input: List<String>): Int = input
 
 fun main() {
     // test if implementation meets criteria from the description, like:
-    val testInput = readInput("Day03_test")
+    val testInput = readTestInput("Day03")
     check(part1(testInput) == 157)
     check(part2(testInput) == 70)
 
