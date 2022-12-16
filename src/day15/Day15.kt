@@ -41,17 +41,17 @@ private fun List<ScannedArea>.findNonScannedPosition(searchDistance: Int): Posit
     for (scannedArea in scannedAreas) {
         val sensor = scannedArea.center
         val radius = scannedArea.radius
-        val req = radius + 1
+        val borderDistance = radius + 1
 
-        for (d in (0..req)) {
-            val possitionsToInspect = listOf(
-                Position(sensor.x - req + d, sensor.y + d),
-                Position(sensor.x - req + d, sensor.y - d),
-                Position(sensor.x + req - d, sensor.y + d),
-                Position(sensor.x + req - d, sensor.y - d),
+        for (offset in (0..borderDistance)) {
+            val positionsToInspect = listOf(
+                Position(sensor.x - borderDistance + offset, sensor.y + offset),
+                Position(sensor.x - borderDistance + offset, sensor.y - offset),
+                Position(sensor.x + borderDistance - offset, sensor.y + offset),
+                Position(sensor.x + borderDistance - offset, sensor.y - offset),
             )
 
-            val nonScannedPosition: Position? = possitionsToInspect.firstOrNull { position->
+            val nonScannedPosition: Position? = positionsToInspect.firstOrNull { position->
                 position.x >= 0 && position.y >= 0
                         && position.x <= searchDistance && position.y <= searchDistance
                         && scannedAreas.none { area -> position isIn area }
