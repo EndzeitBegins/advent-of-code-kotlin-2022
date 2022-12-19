@@ -11,7 +11,16 @@ private data class Blueprint(
     val obsidianRobotClayCost: Int,
     val geodeRobotOreCost: Int,
     val geodeRobotObsidianCost: Int,
-)
+) {
+    val maxOreUsagePossible: Int = listOf(
+        oreRobotOreCost,
+        clayRobotOreCost,
+        obsidianRobotOreCost,
+        geodeRobotOreCost,
+    ).max()
+    val maxClayUsagePossible: Int = obsidianRobotClayCost
+    val maxObsidianUsagePossible: Int = geodeRobotObsidianCost
+}
 
 private val blueprintRegex =
     """Blueprint (\d+): Each ore robot costs (\d+) ore. Each clay robot costs (\d+) ore. Each obsidian robot costs (\d+) ore and (\d+) clay. Each geode robot costs (\d+) ore and (\d+) obsidian.""".toRegex()
@@ -120,6 +129,20 @@ private data class EventNode(
 )
 
 private fun EventNode.possibleActions(): List<EventNode> {
+    if (inventory.ore >= blueprint.geodeRobotOreCost && inventory.obsidian >= blueprint.geodeRobotObsidianCost) {
+        return listOf(
+            EventNode(
+                blueprint = blueprint,
+                inventory = inventory.withWorkFrom(
+                    robotTeam,
+                    usingOre = blueprint.geodeRobotOreCost,
+                    usingObsidian = blueprint.geodeRobotObsidianCost,
+                ),
+                robotTeam = robotTeam.enlargedBy(geodeRobots = 1)
+            )
+        )
+    }
+
     val possibleActions = mutableListOf(
         EventNode(
             blueprint = blueprint,
@@ -128,23 +151,12 @@ private fun EventNode.possibleActions(): List<EventNode> {
         )
     )
 
-    if (inventory.ore >= blueprint.oreRobotOreCost) {
-        possibleActions += EventNode(
-            blueprint = blueprint,
-            inventory = inventory.withWorkFrom(robotTeam, usingOre = blueprint.oreRobotOreCost),
-            robotTeam = robotTeam.enlargedBy(oreRobots = 1)
-        )
-    }
+    if (robotTeam.obsidianRobots > blueprint.maxObsidianUsagePossible)
+        return possibleActions
 
-    if (inventory.ore >= blueprint.clayRobotOreCost) {
-        possibleActions += EventNode(
-            blueprint = blueprint,
-            inventory = inventory.withWorkFrom(robotTeam, usingOre = blueprint.clayRobotOreCost),
-            robotTeam = robotTeam.enlargedBy(clayRobots = 1)
-        )
-    }
-
-    if (inventory.ore >= blueprint.obsidianRobotOreCost && inventory.clay >= blueprint.obsidianRobotClayCost) {
+    if (inventory.ore >= blueprint.obsidianRobotOreCost &&
+        inventory.clay >= blueprint.obsidianRobotClayCost
+    ) {
         possibleActions += EventNode(
             blueprint = blueprint,
             inventory = inventory.withWorkFrom(
@@ -156,15 +168,25 @@ private fun EventNode.possibleActions(): List<EventNode> {
         )
     }
 
-    if (inventory.ore >= blueprint.geodeRobotOreCost && inventory.obsidian >= blueprint.geodeRobotObsidianCost) {
+    if (robotTeam.clayRobots > blueprint.maxClayUsagePossible)
+        return possibleActions
+
+    if (inventory.ore >= blueprint.clayRobotOreCost) {
         possibleActions += EventNode(
             blueprint = blueprint,
-            inventory = inventory.withWorkFrom(
-                robotTeam,
-                usingOre = blueprint.geodeRobotOreCost,
-                usingObsidian = blueprint.geodeRobotObsidianCost,
-            ),
-            robotTeam = robotTeam.enlargedBy(geodeRobots = 1)
+            inventory = inventory.withWorkFrom(robotTeam, usingOre = blueprint.clayRobotOreCost),
+            robotTeam = robotTeam.enlargedBy(clayRobots = 1)
+        )
+    }
+
+    if (robotTeam.oreRobots > blueprint.maxOreUsagePossible)
+        return possibleActions
+
+    if (inventory.ore >= blueprint.oreRobotOreCost) {
+        possibleActions += EventNode(
+            blueprint = blueprint,
+            inventory = inventory.withWorkFrom(robotTeam, usingOre = blueprint.oreRobotOreCost),
+            robotTeam = robotTeam.enlargedBy(oreRobots = 1)
         )
     }
 
@@ -186,9 +208,9 @@ private fun List<EventNode>.filterForMostSensibleActions(limit: Int): List<Event
     fun scoreOf(eventNode: EventNode) = eventNode.inventory.ore * oreWorth +
             eventNode.robotTeam.oreRobots * oreRobotWorth +
             eventNode.inventory.clay * clayWorth +
-            eventNode.robotTeam.clayRobots * clayRobotWorth+
+            eventNode.robotTeam.clayRobots * clayRobotWorth +
             eventNode.inventory.obsidian * obsidianWorth +
-            eventNode.robotTeam.obsidianRobots * obsidianRobotWorth+
+            eventNode.robotTeam.obsidianRobots * obsidianRobotWorth +
             eventNode.inventory.geodes * geodeWorth +
             eventNode.robotTeam.geodeRobots * geodeRobotWorth
 
@@ -210,7 +232,7 @@ private fun part2(input: List<String>): Int {
 
     return blueprints
         .map { blueprint -> blueprint.calculateOptimalOutcome(minutes = 32).inventory.geodes }
-        .reduce { lhs, rhs -> lhs * rhs }
+        .reduce(Int::times)
 }
 
 fun main() {
