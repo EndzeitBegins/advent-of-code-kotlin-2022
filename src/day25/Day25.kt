@@ -38,9 +38,9 @@ private fun decimalToSnafu(decimal: Long): String {
         var remainder: Int? = null
 
         for (index in quinary.indices.reversed()) {
-            val xxx = quinary[index].digitToInt() + (remainder ?: 0)
-            val digit = xxx % 5
-            remainder = xxx / 5
+            val placeValue = quinary[index].digitToInt() + (remainder ?: 0)
+            val digit = placeValue % 5
+            remainder = placeValue / 5
 
             val snafuRepresentation = when(digit) {
                 0 -> "0"
